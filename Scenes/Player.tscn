@@ -1,0 +1,92 @@
+[gd_scene load_steps=38 format=2]
+
+[ext_resource path="res://Art/Characters/Player/Walk/Walk_parts/Walk_2.png" type="Texture" id=1]
+[ext_resource path="res://Art/Characters/Player/Walk/Walk_parts/Walk_6.png" type="Texture" id=2]
+[ext_resource path="res://Art/Characters/Player/Walk/Walk_parts/Walk_4.png" type="Texture" id=3]
+[ext_resource path="res://Art/Characters/Player/Walk/Walk_parts/Walk_5.png" type="Texture" id=4]
+[ext_resource path="res://Art/Characters/Player/Walk/Walk_parts/Walk_3.png" type="Texture" id=5]
+[ext_resource path="res://Art/Characters/Player/Walk/Walk_parts/Walk_1.png" type="Texture" id=6]
+[ext_resource path="res://Art/Characters/Player/Walk/Walk_parts/Walk_7.png" type="Texture" id=7]
+[ext_resource path="res://Art/Characters/Player/Idle/Idle_Parts/Idle_1.png" type="Texture" id=8]
+[ext_resource path="res://Art/Characters/Player/Idle/Idle_Parts/Idle_4.png" type="Texture" id=9]
+[ext_resource path="res://Art/Characters/Player/Idle/Idle_Parts/Idle_2.png" type="Texture" id=10]
+[ext_resource path="res://Art/Characters/Player/Idle/Idle_Parts/Idle_3.png" type="Texture" id=11]
+[ext_resource path="res://Art/Characters/Player/Attack_2/Attack_2_Parts/Attack_2_6.png" type="Texture" id=12]
+[ext_resource path="res://Art/Characters/Player/Death/Death_Parts/Death_3.png" type="Texture" id=13]
+[ext_resource path="res://Art/Characters/Player/Death/Death_Parts/Death_4.png" type="Texture" id=14]
+[ext_resource path="res://Art/Characters/Player/Death/Death_Parts/Death_5.png" type="Texture" id=15]
+[ext_resource path="res://Art/Characters/Player/Death/Death_Parts/Death_1.png" type="Texture" id=16]
+[ext_resource path="res://Art/Characters/Player/Death/Death_Parts/Death_2.png" type="Texture" id=17]
+[ext_resource path="res://Art/Characters/Player/Attack_1/Attack_01_Parts/Attack_01_7.png" type="Texture" id=18]
+[ext_resource path="res://Art/Characters/Player/Attack_2/Attack_2_Parts/Attack_2_1.png" type="Texture" id=19]
+[ext_resource path="res://Art/Characters/Player/Attack_2/Attack_2_Parts/Attack_2_2.png" type="Texture" id=20]
+[ext_resource path="res://Art/Characters/Player/Attack_2/Attack_2_Parts/Attack_2_3.png" type="Texture" id=21]
+[ext_resource path="res://Art/Characters/Player/Attack_1/Attack_01_Parts/Attack_01_1.png" type="Texture" id=22]
+[ext_resource path="res://Art/Characters/Player/Damage/Damage_parts/Damage_1.png" type="Texture" id=23]
+[ext_resource path="res://Art/Characters/Player/Attack_2/Attack_2_Parts/Attack_2_4.png" type="Texture" id=24]
+[ext_resource path="res://Art/Characters/Player/Death/Death_Parts/Death_6.png" type="Texture" id=25]
+[ext_resource path="res://Art/Characters/Player/Attack_2/Attack_2_Parts/Attack_2_5.png" type="Texture" id=26]
+[ext_resource path="res://Art/Characters/Player/Damage/Damage_parts/Damage_3.png" type="Texture" id=27]
+[ext_resource path="res://Art/Characters/Player/Attack_1/Attack_01_Parts/Attack_01_2.png" type="Texture" id=28]
+[ext_resource path="res://Art/Characters/Player/Attack_1/Attack_01_Parts/Attack_01_3.png" type="Texture" id=29]
+[ext_resource path="res://Art/Characters/Player/Attack_1/Attack_01_Parts/Attack_01_6.png" type="Texture" id=30]
+[ext_resource path="res://Art/Characters/Player/Damage/Damage_parts/Damage_2.png" type="Texture" id=31]
+[ext_resource path="res://Art/Characters/Player/Attack_1/Attack_01_Parts/Attack_01_5.png" type="Texture" id=32]
+[ext_resource path="res://Art/Characters/Player/Death/Death_Parts/Death_7.png" type="Texture" id=33]
+[ext_resource path="res://Art/Characters/Player/Attack_1/Attack_01_Parts/Attack_01_4.png" type="Texture" id=34]
+[ext_resource path="res://Scripts/Player.gd" type="Script" id=35]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 8 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "idle",
+"speed": 4.0
+}, {
+"frames": [ ExtResource( 16 ), ExtResource( 17 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 25 ), ExtResource( 33 ) ],
+"loop": true,
+"name": "death",
+"speed": 7.0
+}, {
+"frames": [ ExtResource( 6 ), ExtResource( 1 ), ExtResource( 5 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 2 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "walk_right",
+"speed": 7.0
+}, {
+"frames": [ ExtResource( 23 ), ExtResource( 31 ), ExtResource( 27 ) ],
+"loop": true,
+"name": "take_damage",
+"speed": 3.0
+}, {
+"frames": [ ExtResource( 22 ), ExtResource( 28 ), ExtResource( 29 ), ExtResource( 34 ), ExtResource( 32 ), ExtResource( 30 ), ExtResource( 18 ) ],
+"loop": true,
+"name": "attack_1",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 19 ), ExtResource( 20 ), ExtResource( 21 ), ExtResource( 24 ), ExtResource( 26 ), ExtResource( 12 ) ],
+"loop": true,
+"name": "attack_2",
+"speed": 6.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 31.0
+height = 70.0
+
+[node name="Player" type="Area2D" groups=["entities"]]
+script = ExtResource( 35 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+scale = Vector2( 4, 4 )
+frames = SubResource( 1 )
+animation = "idle"
+frame = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -5, 0 )
+shape = SubResource( 2 )
+
+[connection signal="body_entered" from="." to="." method="_on_Player_body_entered"]

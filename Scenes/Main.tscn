@@ -1,0 +1,69 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Scripts/Main.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Enemy_Predator.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/PauseHUD.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/ScoreHUD.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/QuitConfirmHUD.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Audio/space-jazz.ogg" type="AudioStream" id=7]
+[ext_resource path="res://Art/Backgrounds/02/layers/l1_nebula-01.png" type="Texture" id=8]
+[ext_resource path="res://Scenes/OptionsHUD.tscn" type="PackedScene" id=9]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1920, 0, 0, 0, 0, 0, 1920, 1080, 0, 0, 0, 0, 0, 1080, 0, 0, 0, 0, 0, 0 )
+}
+
+[node name="Main" type="Node2D"]
+script = ExtResource( 1 )
+enemy_scene = ExtResource( 2 )
+
+[node name="Background" type="Sprite" parent="."]
+position = Vector2( 960, 540 )
+texture = ExtResource( 8 )
+
+[node name="ScoreHUD" parent="." instance=ExtResource( 5 )]
+
+[node name="PauseHUD" parent="." instance=ExtResource( 4 )]
+
+[node name="OptionsHUD" parent="." instance=ExtResource( 9 )]
+
+[node name="QuitConfirmHUD" parent="." instance=ExtResource( 6 )]
+
+[node name="ScoreTimer" type="Timer" parent="."]
+
+[node name="EnemyTimer" type="Timer" parent="."]
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+
+[node name="StartPosition" type="Position2D" parent="."]
+position = Vector2( 960, 540 )
+__meta__ = {
+"_editor_description_": "middle position of the 1920x1080"
+}
+
+[node name="EnemyPath" type="Path2D" parent="."]
+curve = SubResource( 1 )
+
+[node name="EnemySpawnLocation" type="PathFollow2D" parent="EnemyPath"]
+
+[node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 7 )
+volume_db = -3.0
+
+[connection signal="game_paused" from="." to="Player" method="_on_Main_game_paused"]
+[connection signal="options_menu_open" from="PauseHUD" to="." method="_on_PauseHUD_options_menu_open"]
+[connection signal="quit_game" from="PauseHUD" to="." method="_on_PauseHUD_quit_game"]
+[connection signal="unpause_game" from="PauseHUD" to="." method="_on_PauseHUD_unpause_game"]
+[connection signal="leave_options_menu" from="OptionsHUD" to="." method="_on_OptionsHUD_leave_options_menu"]
+[connection signal="volume_change" from="OptionsHUD" to="." method="volume_change"]
+[connection signal="cancel_quit" from="QuitConfirmHUD" to="." method="_on_QuitConfirmHUD_cancel_quit"]
+[connection signal="confirm_quit" from="QuitConfirmHUD" to="." method="_on_QuitConfirmHUD_confirm_quit"]
+[connection signal="timeout" from="ScoreTimer" to="." method="_on_ScoreTimer_timeout"]
+[connection signal="timeout" from="EnemyTimer" to="." method="_on_EnemyTimer_timeout"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_StartTimer_timeout"]
