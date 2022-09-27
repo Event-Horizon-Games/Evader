@@ -24,6 +24,7 @@ func _process(delta):
 			pause()
 			emit_signal("game_paused", true)
 	if Input.is_action_just_released("attack"):
+		$Player/AnimatedSprite.stop()
 		$Player/AnimatedSprite.play("attack_1")
 
 func game_over():
@@ -121,3 +122,6 @@ func volume_change(volume):
 		AudioServer.set_bus_mute(AudioServer.get_bus_index("Master"), false)
 		var new_volume_db = (volume - 50.0) / 10
 		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), new_volume_db)
+
+func _on_Player_hit():
+	game_over()
